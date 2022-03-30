@@ -1,21 +1,26 @@
 extern crate clap;
-use clap::{Arg, App};
-use std::env;
+use clap::{Arg, Command};
 
 fn main() {
-    let options = App::new("Planetary: GNU Global like tagging system")
-        .arg(Arg::new("debug")
-            .short('D')
-            .long("debug")
-            .help("debug dump input file"))
+    let options = Command::new("Planetary: GNU Global like tagging system")
+        .arg(
+            Arg::new("debug")
+                .short('d')
+                .long("debug")
+                .takes_value(true)
+                .value_name("FILE")
+                .help("debug dump input file")
+        )
         .get_matches();
     
-    if options.is_present("debug") {
-        debug_dump_file(env::args().value_of())
+    if let Some(v) = options.value_of("debug") {
+        debug_dump_file(v);
     }
     println!("Hello, world!");
 }
 
 fn debug_dump_file(file_name: &str) {
-    println!("debug_dump_file");
+    println!("debug_dump_file: {}", file_name);
+
+    
 }
